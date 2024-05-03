@@ -1,46 +1,35 @@
-CREATE DATABASE MyNewDbForTestInMindBox;
+﻿CREATE DATABASE ProductsDB;
 
-USE MyNewDbForTestInMindBox;
+USE ProductsDB;
 
 CREATE TABLE Products (
-    ProductID INT PRIMARY KEY,
-    ProductName NVARCHAR(255)
+    ProductId INT PRIMARY KEY,
+    Name NVARCHAR(100)
 );
 
 CREATE TABLE Categories (
-    CategoryID INT PRIMARY KEY,
-    CategoryName NVARCHAR(255)
+    CategoryId INT PRIMARY KEY,
+    Name NVARCHAR(100)
 );
 
-CREATE TABLE ProductCategories (
-    ProductID INT,
-    CategoryID INT,
-    PRIMARY KEY (ProductID, CategoryID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
-    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+CREATE TABLE ProductCategory (
+    ProductId INT,
+    CategoryId INT,
+    PRIMARY KEY (ProductId, CategoryId),
+    FOREIGN KEY (ProductId) REFERENCES Products(ProductId),
+    FOREIGN KEY (CategoryId) REFERENCES Categories(CategoryId)
 );
 
-
-INSERT INTO Products (ProductID, ProductName) VALUES (1, 'Product A');
-INSERT INTO Products (ProductID, ProductName) VALUES (2, 'Product B');
-INSERT INTO Products (ProductID, ProductName) VALUES (3, 'Product C');
-
-INSERT INTO Categories (CategoryID, CategoryName) VALUES (1, 'Category X');
-INSERT INTO Categories (CategoryID, CategoryName) VALUES (2, 'Category Y');
-INSERT INTO Categories (CategoryID, CategoryName) VALUES (3, 'Category Z');
-
-INSERT INTO ProductCategories (ProductID, CategoryID) VALUES (1, 1);
-INSERT INTO ProductCategories (ProductID, CategoryID) VALUES (2, 1);
-INSERT INTO ProductCategories (ProductID, CategoryID) VALUES (2, 2);
-INSERT INTO ProductCategories (ProductID, CategoryID) VALUES (3, 3);
-
+INSERT INTO Products (ProductId, Name) VALUES (1, 'Product A'), (2, 'Product B'), (3, 'Product C');
+INSERT INTO Categories (CategoryId, Name) VALUES (1, 'Category X'), (2, 'Category Y'), (3, 'Category Z');
+INSERT INTO ProductCategory (ProductId, CategoryId) VALUES (1, 1), (2, 2), (3, 2), (3, 3);
 
 SELECT 
-    p.ProductName AS ProductName,
-    ISNULL(c.CategoryName, 'No Category') AS CategoryName
+    p.Name AS ProductName,
+    ISNULL(c.Name, 'No Category') AS CategoryName
 FROM 
     Products p
 LEFT JOIN 
-    ProductCategories pc ON p.ProductID = pc.ProductID
+    ProductCategory pc ON p.ProductId = pc.ProductId
 LEFT JOIN 
-    Categories c ON pc.CategoryID = c.CategoryID;
+    Categories c ON pc.CategoryId = c.CategoryId;
