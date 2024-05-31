@@ -25,7 +25,7 @@ INSERT INTO Categories (CategoryId, Name) VALUES (1, 'Category X'), (2, 'Categor
 INSERT INTO ProductCategory (ProductId, CategoryId) VALUES (1, 1), (2, 2), (3, 2), (3, 3);
 
 SELECT 
-    p.Name AS ProductName,
+    p.Name AS ProductName, 
     ISNULL(c.Name, 'No Category') AS CategoryName
 FROM 
     Products p
